@@ -33,6 +33,19 @@ services:
       - DB_DATABASE=${DB_DATABASE:-laravel}
       - DB_USERNAME=${DB_USERNAME:-phper}
       - DB_PASSWORD=${DB_PASSWORD:-secret}
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - target: 80
+        published: ${PHPMYADMIN_PUBLISHED_PORT:-8080}
+        protocol: tcp
+        mode: host
+        
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db  # MySQLサービスのホスト名
+      - PMA_USER=${DB_USERNAME:-phper}
+      - PMA_PASSWORD=${DB_PASSWORD:-secret}
 
   web:
     build:
